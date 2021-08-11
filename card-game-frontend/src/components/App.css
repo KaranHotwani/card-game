@@ -1,0 +1,22 @@
+.App {
+  text-align: center;
+  padding: 2%;
+}
+
+.user-box{
+  width: 80%;
+  margin: 5%;
+  height: 40px;
+}
+.btn{
+  background-color:cornflowerblue;
+  margin-left: 5%;
+  margin-top: -30%;
+  /* margin-bottom: 182px; */
+  height: 30px;
+}
+.start-btn{
+  background-color: cornflowerblue;
+  margin: 10%;
+  padding: 10px;
+}

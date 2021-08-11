@@ -26,7 +26,7 @@ export const cardSlice = createSlice({
             }
         ],
         availableCardValues:["Cat","Shuffle","ExplodingK","Defuse"],
-        user:"No User",
+        user:null,
         defuseCardCount:0,
         gameStatus:"NS",//"NS,W,L"
     },
@@ -55,7 +55,7 @@ export const cardSlice = createSlice({
 
         },
         setUser:(state,action)=>{
-
+            state.user = action.payload.user;
         },
         setGameStatus:(state,action)=>{
 
