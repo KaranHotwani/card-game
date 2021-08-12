@@ -1,6 +1,6 @@
 import './App.css';
 import Modal from "react-modal";
-import { useSelector, useDispatch } from 'react-redux'
+import { useSelector, useDispatch } from 'react-redux';
 import { useState, useEffect } from "react";
 import { setUser } from "../redux/cardSlice";
 import { useHistory } from "react-router-dom";

@@ -5,22 +5,27 @@ export const cardSlice = createSlice({
     initialState:{
         cardValues:[
             {
+                id:"1",
                 type:"Cat",
                 isOpen:false
             },
             {
+                id:"2",
                 type:"Shuffle",
                 isOpen:false
             },
             {
+                id:"3",
                 type:"Cat",
                 isOpen:false
             },
             {
+                id:"4",
                 type:"ExplodingK",
                 isOpen:false
             },
             {
+                id:"5",
                 type:"Defuse",
                 isOpen:false
             }
@@ -32,11 +37,11 @@ export const cardSlice = createSlice({
     },
     reducers:{
         showCard: (state,action)=>{
-            const type = action.payload.type;
+            const id = action.payload.id;
             for(let i=0;i<state.cardValues.length;i++)
             {
                 const card = state.cardValues[i];
-                if(card.type===type && !card.isOpen)
+                if(card.id===id && !card.isOpen)
                 {
                     state.cardValues[i].isOpen = true;
                 }
