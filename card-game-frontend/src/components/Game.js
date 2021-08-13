@@ -5,7 +5,8 @@ import { useState, useEffect } from "react";
 import { setUser } from "../redux/cardSlice";
 import Card from './Card';
 export default function Game() {
-    const cardValues = useSelector(state => state.cards.cardValues)
+    const cardValues = useSelector(state => state.cards.cardValues);
+    const defuseCardCount = useSelector(state=> state.cards.defuseCardCount);
     return (
         <div>
             <h1 style={{ textAlign: "center" }}>
@@ -14,7 +15,7 @@ export default function Game() {
             <div class="row">
 
                 {cardValues.map(card=>(
-                    <Card type={card.type} isOpen={card.isOpen} id={card.id}/>
+                    <Card type={card.type} isOpen={card.isOpen} id={card.id} defuseCardCount={defuseCardCount} />
                 ))}
                 
             </div>

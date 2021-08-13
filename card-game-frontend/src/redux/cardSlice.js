@@ -48,16 +48,26 @@ export const cardSlice = createSlice({
             }
         },
         removeCard:(state,action)=>{
-
+            state.cardValues = state.cardValues.filter(card=>card.id!==action.payload.id);
         },
         generateRandomCards:(state,action)=>{
-
+            let newCards = [];
+            for(let i=0;i<5;i++)
+            {
+                const randomIndex = Math.floor(Math.random()*state.availableCardValues.length);
+                newCards.push({
+                    id:i+1,
+                    type:state.availableCardValues[randomIndex],
+                    isOpen:false
+                })
+            }
+            state.cardValues = newCards;
         },
         incrementDefuseCount:(state,action)=>{
-
+            state.defuseCardCount++;
         },
         decrementDefuseCount:(state,action)=>{
-
+            state.defuseCardCount--;
         },
         setUser:(state,action)=>{
             state.user = action.payload.user;
