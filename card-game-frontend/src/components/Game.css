@@ -18,3 +18,20 @@
     background-color: #f1f1f1;
     height: 250px;
   }
+  .leaderboard{
+    border: 2px solid black;
+    width: 20%;
+    height: 100%;
+    margin-left: 77.5%;
+    padding: 20px;
+    /* padding-top: 400px; */
+  }
+
+  .gameStatusDisplay{
+    border: 2px solid black;
+    width: 40%;
+    height: 20%;
+    margin-top: 20%;
+    margin-left: 20%;
+    padding: 20px;
+  }

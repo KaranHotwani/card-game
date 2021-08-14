@@ -33,7 +33,7 @@ export const cardSlice = createSlice({
         availableCardValues:["Cat","Shuffle","ExplodingK","Defuse"],
         user:null,
         defuseCardCount:0,
-        gameStatus:"NS",//"NS,W,L"
+        gameStatus:"Start Play",
     },
     reducers:{
         showCard: (state,action)=>{
@@ -73,7 +73,7 @@ export const cardSlice = createSlice({
             state.user = action.payload.user;
         },
         setGameStatus:(state,action)=>{
-
+            state.gameStatus = action.payload.gameStatus;
         },
     }
 })
