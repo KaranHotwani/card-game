@@ -55,7 +55,7 @@ export default function Card(props) {
                 }));
             }
 
-        },2000)
+        },1000)
         
     }
     return (

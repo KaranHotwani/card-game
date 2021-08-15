@@ -3,7 +3,7 @@ import "./Game.css";
 import { useSelector } from 'react-redux';
 import Modal from "react-modal";
 import { useState, useEffect } from "react";
-import { generateRandomCards , updateLeaderboard, setUser, setGameId} from "../redux/cardSlice";
+import { generateRandomCards , updateLeaderboard, setUser, setGameId, decrementDefuseCount} from "../redux/cardSlice";
 import Card from './Card';
 import { useDispatch } from 'react-redux';
 import { io } from "socket.io-client";
@@ -20,6 +20,7 @@ export default function Game() {
     const cardValues = useSelector(state => state.cards.cardValues);
     const defuseCardCount = useSelector(state=> state.cards.defuseCardCount);
     const [modalIsOpen, setModalIsOpen] = useState(false);
+    const [looseModalIsOpen, setLooseModalIsOpen] = useState(false);
     const gameStatus = useSelector(state=> state.cards.gameStatus);
     const leaderBoard = useSelector(state => state.cards.leaderBoard);
     const userId = localStorage.getItem("user");
@@ -27,9 +28,8 @@ export default function Game() {
     const history = useHistory();
     // const location = useLocation();
     const displayModal = ()=>{
-        setModalIsOpen(true);
+        setLooseModalIsOpen(true);
     }
-
     const updateGame = (result)=>{
         if(result==="WON")
         {
@@ -38,14 +38,6 @@ export default function Game() {
     }
 
     const startNewGame = ()=>{
-        // dispatch(generateRandomCards());
-        // const gameId = Math.floor(Math.random()*10000)+1;
-        // dispatch(setGameId({
-        // gameId:`${userId}-${gameId}`
-        // }))
-        // dispatch(setUser({
-        //     user:userId
-        //   }))
         history.push("/");
     }
 
@@ -54,6 +46,17 @@ export default function Game() {
         // const pathArray = location.pathname.split('/');
         // const gameId = pathArray[pathArray.length-1];
         // const user = gameId.split('-')[0];
+        const fetchData = async()=>{
+            const result = await axios.get('http://localhost:3001/get_leaderboard');
+            console.log(result.data.data);
+            const finalData = result.data.data.map(record=>{
+                let parsedRecord = JSON.parse(record)
+                delete parsedRecord.games;
+                return parsedRecord;
+            });
+            dispatch(updateLeaderboard({finalData:finalData}))
+        }
+        fetchData();
         dispatch(setUser({
             user:userId
           }))
@@ -63,11 +66,29 @@ export default function Game() {
 
     socket.on("update-leaderboard",(userData)=>{
         console.log("update-leaderboard",userData);
-        dispatch(updateLeaderboard({userData:userData}));
+        delete userData.games;
+        const leaderBoardCopy = JSON.parse(JSON.stringify(leaderBoard));
+        
+        let found = false;
+        console.log("yes 75");
+        for(let i=0;i<leaderBoardCopy.length;i++)
+        {
+            if(leaderBoardCopy[i].userId===userData.userId)
+            {
+                leaderBoardCopy[i] = userData;
+                found=true;
+            }
+        }
+        if(!found)
+        {
+            leaderBoardCopy.push(userData);
+        }
+        
+        dispatch(updateLeaderboard({finalData:leaderBoardCopy}));
     })
     return (
         <div>
-            <Modal isOpen={modalIsOpen} onRequestClose={() => setModalIsOpen(false)}>
+            <Modal isOpen={looseModalIsOpen} onRequestClose={() => setLooseModalIsOpen(false)}>
                 <form onSubmit={startNewGame}>
 
                     <p>You Loose</p>

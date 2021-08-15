@@ -80,4 +80,20 @@ app.get('/',(request,response)=>{
     response.send("This is get");
 })
 
+app.get('/get_leaderboard',(request,response)=>{
+    redisClient.KEYS("*",(error,data)=>{
+        if(error)
+        {
+            console.log(error);
+        }
+        console.log(data);
+        if(data!==null)
+        {
+            redisClient.MGET(data,(err,finalData)=>{
+                response.send({data:finalData});
+            })
+        }
+    });
+})
+
 httpServer.listen(3001,()=>console.log("Listening on port 3001"));

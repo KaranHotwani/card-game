@@ -11,7 +11,7 @@ export const cardSlice = createSlice({
             },
             {
                 id:"2",
-                type:"Shuffle",
+                type:"Defuse",
                 isOpen:false
             },
             {
@@ -30,7 +30,7 @@ export const cardSlice = createSlice({
                 isOpen:false
             }
         ],
-        availableCardValues:["Cat","Shuffle","ExplodingK","Defuse"],
+        availableCardValues:["Cat","Cat","ExplodingK","Defuse"],
         user:null,
         defuseCardCount:0,
         gameStatus:"Start Play",
@@ -81,20 +81,7 @@ export const cardSlice = createSlice({
             state.gameId = action.payload.gameId;
         },
         updateLeaderboard:(state,action)=>{
-            if(!state.leaderBoard.includes(action.payload.userData))
-            {
-                state.leaderBoard.push(action.payload.userData);
-            }
-            else
-            {
-                for(let i=0;i<state.leaderBoard.length;i++)
-                {
-                    if(state.leaderBoard[i].userId===action.payload.userData.userId)
-                    {
-                        state.leaderBoard[i] = action.payload.userData;
-                    }
-                }
-            }
+            state.leaderBoard = action.payload.finalData;
             state.leaderBoard.sort(function(a, b){return b.points - a.points});
             
         }
