@@ -30,10 +30,10 @@ export const cardSlice = createSlice({
                 isOpen:false
             }
         ],
-        availableCardValues:["Cat","Cat","ExplodingK","Defuse"],
+        availableCardValues:["Cat","Shuffle","ExplodingK","Defuse"],
         user:null,
         defuseCardCount:0,
-        gameStatus:"Start Play",
+        gameStatus:"Start Play. Choose a Card",
         gameId:null,
         leaderBoard:[]
     },
