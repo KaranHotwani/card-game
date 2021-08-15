@@ -34,6 +34,8 @@ export const cardSlice = createSlice({
         user:null,
         defuseCardCount:0,
         gameStatus:"Start Play",
+        gameId:null,
+        leaderBoard:[]
     },
     reducers:{
         showCard: (state,action)=>{
@@ -75,8 +77,29 @@ export const cardSlice = createSlice({
         setGameStatus:(state,action)=>{
             state.gameStatus = action.payload.gameStatus;
         },
+        setGameId:(state,action)=>{
+            state.gameId = action.payload.gameId;
+        },
+        updateLeaderboard:(state,action)=>{
+            if(!state.leaderBoard.includes(action.payload.userData))
+            {
+                state.leaderBoard.push(action.payload.userData);
+            }
+            else
+            {
+                for(let i=0;i<state.leaderBoard.length;i++)
+                {
+                    if(state.leaderBoard[i].userId===action.payload.userData.userId)
+                    {
+                        state.leaderBoard[i] = action.payload.userData;
+                    }
+                }
+            }
+            state.leaderBoard.sort(function(a, b){return b.points - a.points});
+            
+        }
     }
 })
 
-export const { showCard, removeCard, generateRandomCards , incrementDefuseCount , decrementDefuseCount, setUser, setGameStatus} = cardSlice.actions;
+export const { showCard, removeCard, generateRandomCards , incrementDefuseCount , decrementDefuseCount, setUser, setGameStatus, setGameId ,updateLeaderboard} = cardSlice.actions;
 export default cardSlice.reducer;
